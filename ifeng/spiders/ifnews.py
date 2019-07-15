@@ -2,7 +2,7 @@
 import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
-from ifeng.items import ArticleItem, PhotoItem
+from ifeng.items import ArticleItem
 import re
 import os
 
@@ -51,16 +51,16 @@ class IfnewsSpider(CrawlSpider):
         #对文章内容进行筛选和拼接
         content=""
         #提取出所有不含标签的内容，此内容为文章正文
-        aaa = response.xpath('//div[@id="main_content"]/p[not(@*)]/text()')
+        article = response.xpath('//div[@id="main_content"]/p[not(@*)]/text()')
 
         #社会话题，网页分布不一样，没有main_content
-        if aaa:
+        if article:
             pass
             #item['img'] = response.xpath('//div[@id="main_content"]/p[@class="detailPic"]/img/@src').get()
         else:
-            aaa = response.xpath('//div[@class="wrapIphone AtxtType01"]/p[not(@*)]/text()')
+            article = response.xpath('//div[@class="wrapIphone AtxtType01"]/p[not(@*)]/text()')
         #拼接<p>标签
-        for p in aaa:
+        for p in article:
             content = content + p.extract().strip()
         content = '%s %s %s' % ('<p>',content,'</p>')
 
@@ -96,7 +96,7 @@ class IfnewsSpider(CrawlSpider):
 
     #组图情况下
     def parse_photo(self, response):
-        item = PhotoItem()
+        item = ArticleItem()
         item['time']=response.xpath('//h4/text()').get()
         item['title'] =response.xpath('//h1/text()').get()
         
