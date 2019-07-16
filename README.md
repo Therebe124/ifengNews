@@ -20,6 +20,22 @@ https://github.com/Therebe124/ifengNews
 			从html的head中获取time、title:
 				xpath('//head/meta[@name="og:time"]/@content')
 				xpath('//head/meta[@property="og:title"]/@content')
+				(7.16发现问题进行更改):
+					
+					if time:
+            			pass
+        			elif response.xpath('//div[@class="time01 clearfix"]/p/span/text()').get():
+           				time = response.xpath('//div[@class="time01 clearfix"]/p/span/text()').get()
+        			else:
+            			time = response.xpath('//span[@class="ss01"]/text()').get()
+
+            		if title:
+            			pass
+        			elif response.xpath('//h1/text()').get():
+            			title = response.xpath('//h1/text()').get()
+        			else:
+            			title = response.xpath('//h1/a/text()').get()
+        
 			从response中获取url:
 				response.url
 			根据id="main_content"获取正文信息:
