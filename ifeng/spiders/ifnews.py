@@ -38,16 +38,20 @@ class IfnewsSpider(CrawlSpider):
         time = response.xpath('//head/meta[@name="og:time"]/@content').get()
         if time:
             pass
-        else:
+        elif response.xpath('//div[@class="time01 clearfix"]/p/span/text()').get():
             time = response.xpath('//div[@class="time01 clearfix"]/p/span/text()').get()
+        else:
+            time = response.xpath('//span[@class="ss01"]/text()').get()
         item['time'] = time
         
         #title（在头文件进行抓取）   
         title = response.xpath('//head/meta[@property="og:title"]/@content').get()
         if title:
             pass
-        else:
+        elif response.xpath('//h1/text()').get():
             title = response.xpath('//h1/text()').get()
+        else:
+            title = response.xpath('//h1/a/text()').get()
         item['title'] = title
         #item['title'] = response.xpath('//h1/text()').get()
         #item['title'] = response.xpath('//h1[@id="artical_topic"]/text()').get()      

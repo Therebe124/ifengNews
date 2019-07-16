@@ -103,7 +103,11 @@ https://github.com/Therebe124/ifengNews
 			base_url = "http://news.ifeng.com/rt-channel/rtlist_20150"+str(i)+"/1.shtml"
 			for i in range(401,409):
 			此情况，需要手动配置，获取每一个月的。（7.16 Done）
-	增加redis或者mongodb断点续爬:
-		doing...
+	增加redis或者mongodb断点续爬(7.16 Done):
+		redis增量查询ok——pipelines.py:
+			链接redis数据库(db=4)：redis_db = redis.Redis(host='127.0.0.1',port=6379,db=4,password='123456')
+			通过url判断数据是否爬取:if redis_db.hexists(redis_data_dict,item['url']): print("数据重复")
+	考虑分布式爬取(redis?):
+		doing...			
 
 

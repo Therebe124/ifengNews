@@ -6,6 +6,12 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 import pymysql
+import redis
+import pandas
+
+#connect redis 
+redis_db = redis.Redis(host='127.0.0.1',port=6379,db=4,password='123456')
+redis_data_dict = 'u'
 
 class IfengPipeline(object):
     def __init__(self):
@@ -17,9 +23,21 @@ class IfengPipeline(object):
         self.cursor = self.conn.cursor()
         self._sql = None
 
+        redis_db.flushdb()
+        if redis_db.hlen(redis_data_dict)==0:
+            sql = 'select origin_url from article'
+            df = pandas.read_sql(sql,self.conn)
+
+            for url in df['origin_url'].get_values():
+                redis_db.hset(redis_data_dict,url,0)
+            
+
     def process_item(self, item, spider):
-        self.cursor.execute(self.sql,(item['time'],item['title'],item['content'],item['url'],item['img'],item['img_details']))
-        self.conn.commit()
+        if redis_db.hexists(redis_data_dict,item['url']):
+            print("数据重复")
+        else:
+            self.cursor.execute(self.sql,(item['time'],item['title'],item['content'],item['url'],item['img'],item['img_details']))
+            self.conn.commit()
         return item
 
     @property
@@ -28,3 +46,4 @@ class IfengPipeline(object):
             self._sql ="""insert into article(number,pub_time,title,content,origin_url,img,img_details) values (null,%s,%s,%s,%s,%s,%s)"""
             return self._sql
         return self._sql
+
