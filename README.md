@@ -5,6 +5,15 @@ https://github.com/Therebe124/ifengNews
 练习程序，目标:获取链接目标中的新闻信息（包括title，time，content，img等等）
 使用scrapy进行数据的获取
 
+项目依赖：
+pip install requests
+pip install scrapy
+pip install re
+pip install os
+pip install redis
+pip install pymysql
+pip install pandas
+
 启动:可以运行start.py
 
 主要程序——spiders/ifnews.py:
