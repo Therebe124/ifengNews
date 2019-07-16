@@ -10,11 +10,14 @@ import os
 class IfnewsSpider(CrawlSpider):
     name = 'ifnews'
     allowed_domains = ['news.ifeng.com']
-    start_urls = ['http://news.ifeng.com/rt-channel/rtlist_0/index.shtml','http://news.ifeng.com/rt-channel/rtlist_20150407/1.shtml','http://news.ifeng.com/rt-channel/rtlist_20150406/1.shtml']
+    start_urls = []
+    
+    for i in range(401,409):
+        base_url = "http://news.ifeng.com/rt-channel/rtlist_20150"+str(i)+"/1.shtml"
+        start_urls.append(base_url)    
 
-    #class='newsList'
-    restrict_xpath = '//div[@class="newsList"]'
-      
+    #restrict_xpath class='newsList'
+    restrict_xpath = '//div[@class="newsList"]'  
     rules = (
         Rule(
             LinkExtractor(allow=r'.*/a/*',restrict_xpaths = restrict_xpath), callback = 'parse_a', follow=True

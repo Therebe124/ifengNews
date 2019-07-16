@@ -84,18 +84,23 @@
 		   'Accept-Language': 'en',
 		   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36'
 		}
+		头文件是本电脑用的浏览器获取的，可自行配置
 
 	head信息有待完善
-	因为待爬取的网站目前没碰到反爬机制。（有待确认中）
+	因为待爬取的网站目前没碰到反爬机制。（有待确认中，目前爬了有上万条了，还没有被封IP）
 
 存在问题:
  《凤凰热追踪》文章格式待整理:http://news.ifeng.com/a/20150407/43497980_0.shtml
- 时间格式:页面中没有详细的时间
+ 时间格式:页面中没有详细的时间————目前时间只能获取到日期（7.16 Done）
 
 正在进行中的工作:
 	如何自动获取到前一天的url:
-		可以在最后一个<script>中获取到
-		或者通过自动减少的情况，来获取url，写入带start_url中
-	增加redis或者mongodb断点续爬
+		可以在最后一个<script>中获取到：（暂时放弃）
+		或者通过rang()设置start_url list的情况，来获取url:
+			base_url = "http://news.ifeng.com/rt-channel/rtlist_20150"+str(i)+"/1.shtml"
+			for i in range(401,409):
+			此情况，需要手动配置，获取每一个月的。（7.16 Done）
+	增加redis或者mongodb断点续爬:
+		doing...
 
 
