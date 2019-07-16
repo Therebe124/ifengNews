@@ -1,5 +1,8 @@
 # ifengNews
-联系程序，目标:获取链接目标中的新闻信息（包括title，time，content，img等等）
+
+https://github.com/Therebe124/ifengNews
+
+练习程序，目标:获取链接目标中的新闻信息（包括title，time，content，img等等）
 使用scrapy进行数据的获取
 
 启动:可以运行start.py
